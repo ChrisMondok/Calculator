@@ -1,0 +1,217 @@
+<div id="main" class="palm-scene">
+	<div id="header" class="palm-page-header multi-line" x-mojo-touch-feedback="delayed">
+		<div class="palm-page-header-wrapper">
+			<div class="icon app"></div>
+			<div class="title">
+				RPN Calculator (1.6.5)
+			</div>
+			<div class="subtitle">by Chris Mondok</div>
+		</div>
+	</div>
+	<div id="versionSelectDrawer" class="drawer" x-mojo-element="Drawer">
+		<div class="palm-list">
+			<div class="palm-row single" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div id="versionSelector" x-mojo-element="ListSelector"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="palm-list" id="highlightList">
+		<div class="palm-row drawer-button" id="helpButton" x-mojo-touch-feedback="delayed">
+			<div class="palm-row-wrapper">
+				<div class="title">
+					Help
+				</div>
+			</div>
+		</div>
+		<div id="helpDrawer" class="drawer" x-mojo-element="Drawer">
+			<div class="palm-row drawer-button" id="rpnButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title">
+						Reverse polish what?
+					</div>
+				</div>
+			</div>
+			<div id="rpnDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						Reverse polish notation is an alternative way of writing equations. In standard notation, you may have the expression (5+3)*2.
+						This cannot be written without the use of parentheses. In reverse polish notation, numbers are added to a stack, and then "popped" off of the stack when an operation is performed.
+						The example equation could be written in reverse polish notation as "2 3 5 + *". This may seem confusing at first, but it can lead to speedy entry of complicated equations.
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="usageButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title">
+						How to use this calculator
+					</div>
+				</div>
+			</div>
+			<div id="usageDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						Glad I haven't scared you off yet.<br/>
+						To enter a number, just type the numbers anywhere. Use the n key for negative values.
+						To push it on the stack (that is, to put it at the beginning), either press the enter key, or tap the green arrow button.
+						To pop a number off of the stack (that is, to remove it from the beginning), tap the red arrow button. It will be put into the input field.
+						To perform an operation, tap the operation's button.  The result will then be pushed onto the stack.
+						Many operations use two values, so they will pop two values off of the stack.
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="keysButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title v1-5-0">
+						Keys
+					</div>
+				</div>
+			</div>
+			<div id="keysDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text" id="keyHelp">
+						There are a number of key bindings.
+						<ul>
+							<li>+, -, *, and / perform the corresponding operation.</li>
+							<li>Enter: Push value</li>
+							<li>Meta+Backspace: Pop value</li>
+							<li>%: Divide input by 100</li>
+							<li>n: Insert a negative sign. This is because the '-' key performs the minus operation.</li>
+							<li class="v1-5-5">m: run the currently loaded macro</li>
+						</ul>
+						<span class="v1-6-0">
+							To change key bindings, open preferences, and then tap "Customize keys." Tap a row, and press the key you wish to bind.
+							To remove a bind, type backspace. To restore defaults for that function, press enter.
+						</span>
+						<span class="v1-6-5">
+							Keys can also be bound to macros. First, save the macro.
+							Next, open preferences, choose "Customize keys", and scroll to the bottom of the list.
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="prefsButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title v1-6-5">
+						Preferences
+					</div>
+				</div>
+			</div>
+			<div id="prefsDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						<div class="palm-group">
+							<div class="palm-group-title">
+								Input is top of stack
+							</div>
+							If this option is enabled, any value that is in the input field will be pushed before performing an operation.
+						</div>
+						<div class="palm-group">
+							<div class="palm-group-title">
+								Compact view
+							</div>
+							This option shows four rows of buttons on the screen at once, instead of the usual two.
+						</div>
+						<div class="palm-group">
+							<div class="palm-group-title">
+								Precision
+							</div>
+							This setting determines the maximum number of decimal places to display.
+						</div>
+						<div class="palm-group">
+							<div class="palm-group-title">
+								Reverse root order
+							</div>
+							If this option is enabled, the degree of the root is pushed after the value you would like to find the root of.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="advancedButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title">
+						Advanced usage
+					</div>
+				</div>
+			</div>
+			<div id="advancedDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						There are more operators than what you see when the scene starts. <span class="v1-5-5"> Constants can be accessed by
+						tapping the 'C' key on the math field. To define a custom constant, push a value on the stack, invoke the app menu, and tap
+						"save constant." These can be deleted at the preferences screen.</span> Swiping left or right on the operators group will
+						switch to a different group of operators. <span class="v1-5-0">The radix can be changed with the list selector on the third
+						page of operations.</span> <span class="v1-5-0">Currently, when using a radix other than decimal, you are unable to input
+						decimals. This is because parseFloat does not operate in non-base-ten. If there is enough demand, I will add this in the
+						future.</span>
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="macrosButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title v1-5-5">
+						Macros
+						<div class="label">
+							(v 1.5.5)
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="macrosDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						Macros allow for the automation of repetitive tasks. You define macros by recording them, and play them back by tapping 'run',
+						<span class="v1-6-5"> or by binding keys to them.</span>
+						Additionally, macros can be saved and loaded for later use. As an example, suppose we wanted to create a macro to convert an
+						angle in DMS to Degrees. Assuming that the value is currently on the stack, pushed in the order of Degrees, Minutes, Seconds,
+						we can record this macro very easily. Start by entering the angle you wish to convert Choose "start recording macro" from the
+						app menu. Enter 60, press divide, enter 60, press divide again, and choose "Stop recording macro". Now, when you run the macro,
+						the calculator will "play back" the actions that you took while recording. This can be saved for use later by choosing "save
+						macro" from the app menu. You will be prompted for a name. To load it later, choose "manage macros", and tap on the macro you
+						wish to load.
+					</div>
+				</div>
+			</div>
+			<div class="palm-row drawer-button" id="stacksButton" x-mojo-touch-feedback="delayed">
+				<div class="palm-row-wrapper">
+					<div class="title">
+						About stacks
+					</div>
+				</div>
+			</div>
+			<div id="stacksDrawer" class="drawer" x-mojo-element="Drawer">
+				<div class="palm-row-wrapper">
+					<div class="palm-body-text">
+						A stack is a data structure which holds a number of values. These values are put on to the stack by being "pushed", and removed
+						from the stack by being "popped." Popping a value off of the stack returns its value. When you push a sequence of values onto 
+						the stack, they will be popped in reverse order (A stack is a first in, last out data structure.) 
+						For example, pushing "3", "5", and "8" will yield the stack "8, 5, 3", as the values are placed on the top of the stack as
+						they are added. If you would like to read more about stacks, there is a good article on the wikipedia, although it may be
+						a little too technical for some.
+					<div x-mojo-element="Button" id="wikiButton"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="palm-row drawer-button" id="contactButton" x-mojo-touch-feedback="delayed">
+			<div class="palm-row-wrapper">
+				<div class="title">
+					Contact
+				</div>
+			</div>
+		</div>
+		<div id="contactDrawer" class="drawer" x-mojo-element="Drawer">
+			<div class="palm-row-wrapper">
+				<div class="palm-body-text">
+					Need help with this app?<br/>
+					Have some suggestions?<br/>
+					Though of a better name for my app?<br/>
+					Seriously, anything at all (well, keep it relevant...)!
+					<div x-mojo-element="Button" id="emailButton"></div> 
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

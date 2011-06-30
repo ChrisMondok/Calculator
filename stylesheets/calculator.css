@@ -1,0 +1,240 @@
+div.fullscreenbackground
+{
+	background:url(../images/backdrop-dark.png) top center fixed;
+	position:fixed;
+	left:0%;
+	top:0%;
+	width:320px;
+	height:480px;
+}
+
+div.palm-dark
+{
+	color:white;
+}
+
+.operationGroup
+{
+	text-align:center;
+	margin:0px;
+}
+
+.operationGroup .palm-group-title
+{
+	text-align:left;
+}
+
+div.textFieldClass, #inputDiv
+{
+	margin-top:12px;
+	margin-bottom:0px;
+	margin-left:8px;
+	padding:0px;
+	display:inline-block;
+	overflow:hidden;
+}
+
+.unlabeled .palm-group-title
+{
+	display:none;
+}
+
+.selector
+{
+	height:48px;
+}
+
+#functionsDiv
+{
+	position:fixed;
+	bottom:0px;
+	width:100%;
+	margin:0px;
+	/*background:url(../images/backdrop-dark.png) top center fixed;*/
+	background:#3A3A3A;
+}
+
+#recordingRow
+{
+	background:#743A3A;
+	height:16px;
+}
+
+.functionsScroller
+{
+	border-top:2px ridge rgba(128,128,128,0.5);
+}
+
+.operatorButton
+{
+	min-width:71px;
+	display:inline-block;
+	margin:0px;
+	padding:0px;
+	clear:none;
+}
+
+.inline-selector
+{
+	height:34px;
+}
+
+.inline-selector:first-child
+{
+	height:34px;
+}
+
+#letterRow
+{
+	text-align:center;
+}
+
+
+.letterButton
+{
+	display:inline-block;
+	margin:-3px !important;
+	padding:0px !important;
+	width:50px;
+	text-align:justify;
+}
+
+.letterButton div
+{
+	margin:0px !important;
+	padding:0px !important;
+}
+
+#scrollerContainer
+{
+	width:400%;
+}
+.scrollerItem
+{
+	float:left;
+	width:320px;
+}
+
+.italic
+{
+	font-style:italic;
+}
+
+.operatorDescription
+{
+	display:inline-block;
+	float:right;
+}
+
+.inputButton
+{
+	min-width:71px;
+	display:inline-block;
+	text-align:justify;
+}
+
+#inputScroller
+{
+	width:147px;
+	display:inline-block;
+}
+
+.large
+{
+	font-size:2em;
+}
+
+.lower
+{
+	text-transform:none !important;
+}
+
+#list
+{
+	position:relative;
+	left:0%;
+	margin-bottom:169px;
+}
+#stackList
+{	
+	position:relative;
+	padding-top:81px;
+}
+#stackList .stackElement
+{
+	text-align:center;
+}
+
+#inputBox
+{
+	position:fixed;
+	top:0px;
+	left:0px;
+	z-index:1000;
+	background:#3A3A3A;
+	border-radius:15px;
+}
+
+#inputBackground
+{
+	bacground:#3A3A3A;
+}
+
+.base
+{
+	vertical-align:sub;
+	font-size:0.75em;
+	color:#0000ff;
+}
+
+.caps
+{
+	text-transform:uppercase;
+}
+
+#precisionPicker
+{
+	position:relative;
+	top:-5px;
+}
+
+#Inverse
+{
+	display:inline-block;
+	position:relative;
+	top:-5px;
+	line-height:48px;
+	height:48px;
+	vertical-align:middle;
+}
+
+.highlight
+{
+	background-color:rgba(255,255,0,0.5);
+}
+
+.v1-5-0, .v1-5-5
+{
+	-webkit-transition-property:background;
+	-webkit-transition-duration:0.5s;
+}
+
+.icon.prefs
+{
+	background: url(../images/icons/prefs.png) center center no-repeat;
+}
+
+.icon.macro
+{
+	background: url(../images/icons/macros.png) center center no-repeat;
+}
+
+.icon.help
+{
+	background: url(../images/icons/help.png) center center no-repeat;
+}
+
+.icon.app
+{
+	background: url(../icon.png) center center no-repeat;
+}

@@ -1,0 +1,70 @@
+<div id="main" class="palm-scene">
+	<div class="palm-page-header">
+		<div class="palm-page-header-wrapper">
+			<div class="icon prefs"></div>
+			<div id="title" class="title">
+				Preferences
+			</div>
+		</div>
+	</div>
+	<div class="palm-group">
+		<div class="palm-group-title">Stack settings</div>
+		<div class="palm-list">
+			<div class="palm-row first">
+				<div class="palm-row-wrapper">
+					<div class="title" style="float:left">Vertical stack</div>
+					<div x-mojo-element="ToggleButton" style="float:right" id="verticalToggle"></div>
+				</div>
+			</div>
+			<div class="palm-row">
+				<div class="palm-row-wrapper">
+					<div class="title" style="float:left">Input is top of stack</div>
+					<div x-mojo-element="ToggleButton" style="float:right" id="inputStackToggle"></div>
+				</div>
+			</div>
+			<div class="palm-row last">
+				<div class="palm-row-wrapper">
+					<div class="title" style="float:left">Save stack on exit</div>
+					<div x-mojo-element="ToggleButton" style="float:right" id="saveStackToggle"></div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="palm-group">
+		<div class="palm-group-title">Application settings</div>
+		<div class="palm-list">
+			<div id="compactRow" class="palm-row first">
+				<div class="palm-row-wrapper">
+					<div class="title" style="float:left">Compact view</div>
+					<div x-mojo-element="ToggleButton" style="float:right" id="compactToggle"></div>
+					
+				</div>
+			</div>
+			<div id="precisionRow" class="palm-row">
+				<div class="title" style="float:left">Precision</div>
+				<div x-mojo-element="IntegerPicker" style="float:right" id="precisionPicker"></div>
+			</div>
+			<div class="palm-row last">
+				<div class="palm-row-wrapper">
+					<div class="title" style="float:left">Reverse root order</div>
+					<div x-mojo-element="ToggleButton" style="float:right" id="reverseRootToggle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div x-mojo-element="List" id="constantsList"></div>
+	<div class="palm-group" id="emptyList">
+		<div class="palm-group-title">Custom constants</div>
+		<div class="palm-list">
+			<div class="palm-row single">
+				<div class="palm-row-wrapper">
+					<div class="title disabled truncating-text">
+						No saved constants
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div x-mojo-element="Button" id="keysButton"></div>
+</div>

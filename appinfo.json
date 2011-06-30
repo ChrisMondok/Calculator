@@ -1,0 +1,10 @@
+{
+	"id": "com.chrismondok.rpncalc",
+	"version": "1.6.6",
+	"vendor": "Chris Mondok",
+	"type": "web",
+	"main": "index.html",
+	"title": "RPN Calculator",
+	"icon": "icon.png",
+	"vendorurl": "http://web.njit.edu/~cmm35"
+}

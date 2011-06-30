@@ -1,0 +1,143 @@
+<div class="fullscreenbackground"></div>
+<div id="main" class="palm-scene darkbkg">
+	<div id="inputBox" class="palm-group unlabeled palm-dark" style="background:#3A3A3A; border-radius:15px;">
+		<div class="palm-list" class="inputBackground">
+			<div id="inputRow" class="palm-row single">
+				<div class="palm-row-wrapper">
+					<div x-mojo-element="Scroller" id="inputScroller">
+						<!--<div class="input-fade-left" x-mojo-scroll-fade="left"></div>-->
+						<!--<div class="input-fade-right" x-mojo-scroll-fade="right"></div>-->
+						<div id="inputDiv" class="title fade"></div>
+					</div>
+					<div id="PushButton" class="inputButton" x-mojo-element="Button"></div>
+					<div id="PopButton" class="inputButton" x-mojo-element="Button"></div>
+				</div>
+			</div>
+			<div id="letterRow" class="palm-row last">
+				<div class="palm-row-wrapper">
+					<div id="AButton" class="letterButton" x-mojo-element="Button"></div>
+					<div id="BButton" class="letterButton" x-mojo-element="Button"></div>
+					<div id="CButton" class="letterButton" x-mojo-element="Button"></div>
+					<div id="DButton" class="letterButton" x-mojo-element="Button"></div>
+					<div id="EButton" class="letterButton" x-mojo-element="Button"></div>
+					<div id="FButton" class="letterButton" x-mojo-element="Button"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="stackList" class="title palm-dark"></div>
+	<div class="list palm-dark" x-mojo-element="List" id="list"></div>
+	<div id="functionsDiv" class="palm-dark">
+		<div class="palm-list">
+			<div class="palm-row first"  id="recordingRow">
+				<div class="palm-row-wrapper">
+					<div class="title">
+						Recording macro
+						<div class="label" id="instructionsCount">0 instructions</div>
+					</div>
+				</div>
+			</div>
+			<div class="palm-row last">
+				<div x-mojo-element="Scroller" id="scrollerId" class="functionsScroller">
+					<div id="scrollerContainer" class="scrollerContainer">
+						<!--
+						<div id="fade-left" class="scroll-fade-left" x-mojo-scroll-fade="left"></div>
+						<div id="fade-right" class="scroll-fade-right" x-mojo-scroll-fade="right"></div>
+						-->
+						<div class="scrollerItem" id="scrollerItem:1">
+							<div id="buttonGroup" class="palm-group operationGroup">
+								<div class="palm-group-title">Math</div>
+								<div class="palm-list">
+									<div class="palm-row first">
+										<div class="palm-row-wrapper">
+											<div id="AddButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="SubtractButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="MultiplyButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="DivideButton" class="operatorButton" x-mojo-element="Button"></div>
+										</div>
+									</div>
+									<div class="palm-row endofgroup">
+										<div class="palm-row-wrapper">
+											<div id="PowerButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="RootButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="LogButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="ConstantsButton" class="operatorButton" x-mojo-element="Button"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="scrollerItem" id="scrollerItem:2">
+							<div id="trigGroup" class="palm-group operationGroup unlabeled">
+								<div class="palm-group-title">Trigonometric functions</div>
+								<div class="palm-list">
+									<div class="palm-row first">
+										<div class="palm-row-wrapper">
+											<div id="SinButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="CosButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="TanButton" class="operatorButton" x-mojo-element="Button"></div>
+										</div>
+									</div>
+									<div class="palm-row endofgroup">
+										<div class="palm-row-wrapper">
+											<div id="DegToRadButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="RadToDegButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="Inverse">
+												<div id="InverseButton" style="float:right;" x-mojo-element="CheckBox"></div>
+												<div id="InverseDescription" class="palm-body-text operatorDescription">inverse</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="scrollerItem" id="scrollerItem:3">
+							<div id="stackGroup" class="palm-group operationGroup">
+								<div class="palm-group-title">Special functions</div>
+								<div class="palm-list">
+									<div class="palm-row first">
+										<div class="palm-row-wrapper">
+											<div id="SwapXYButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="ClearButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="CloneButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="MacroButton" class="operatorButton" x-mojo-element="Button"></div>
+										</div>
+									</div>
+									<div class="palm-row last">
+										<div class="palm-row-wrapper">
+											<div id="RotateUpButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="RotateDownButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div class="palm-button operatorButton" x-mojo-tap-highlight="delayed" >
+												<div id="RadixSelector" class="operatorButton inline-selector" x-mojo-element="ListSelector"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="scrollerItem" id="scrollerItem:4">
+							<div id="stackGroup" class="palm-group operationGroup">
+								<div class="palm-group-title">Statistics functions</div>
+								<div class="palm-list">
+									<div class="palm-row first">
+										<div class="palm-row-wrapper">
+											<div id="FactorialButton" class="operatorButton" x-mojo-element="Button"></div>
+											<div id="PermutationButton" class="operatorButton un-capitalize" x-mojo-element="Button"></div>
+											<div id="CombinationButton" class="operatorButton un-capitalize" x-mojo-element="Button"></div>
+										</div>
+									</div>
+									<div class="palm-row last">
+										<div class="palm-row-wrapper">
+											<div id="MeanButton" class="operatorButton lower" x-mojo-element="Button"></div>
+											<div id="StdDevButton" class="operatorButton lower" x-mojo-element="Button"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
