@@ -1,8 +1,8 @@
-#Installation
+# Installation
 The easiest way to install this program is to grab it from the app catalog. If you wish to get the latest (and possibly most buggy) version, you'll have to download and compile from here.
 
-#Manual installation
+# Manual installation
 To build and install manually, you must have the palm SDK installed. Download and extract the calculator. Put your device in developer mode. From here, run "palm-package Calculator", followed by "palm-install com.chrismondok.rpncalc_x.x.x_all.ipk"
 
-#Help
+# Help
 The help scene built into the calculator is quite extensive. Open the app, bring down the app menu, and select help.
