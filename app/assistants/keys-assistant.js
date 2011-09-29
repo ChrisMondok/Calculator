@@ -162,7 +162,8 @@ KeysAssistant.prototype.handleKeyPress = function(event)
 	case 16:	//Shift
 	case 17:	//Sym
 	case 129:	//Alt
-	case 0:
+	case 0:		//EMULATOR: shift
+	case 27:	//EMULATOR: esc
 		//Don't do anything.
 		return;
 		break; //Probably superfluous.
@@ -216,8 +217,6 @@ KeysAssistant.prototype.handleKeyPress = function(event)
 		this.displayKeys(false);
 		break;
 	}
-	//Mojo.Event.stopListening( this.controller.document,"keydown", this.keyListener, true);
-	//this.keyFunction = undefined;
 }
 
 KeysAssistant.prototype.resetAllKeys = function(event)
