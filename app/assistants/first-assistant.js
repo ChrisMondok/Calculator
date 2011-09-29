@@ -48,20 +48,8 @@ FirstAssistant.prototype.setup = function() {
 	this.input = "";
 	this.recordingMacro = false;
 	
-	//load saved macros
-	
-	if(this.saveStack)
-	{
-		var oldStack = new Mojo.Model.Cookie("oldStack");
-		this.stack = oldStack.get() || new Array();
-		var oldList = new Mojo.Model.Cookie("oldList");
-		this.listItems = oldList.get() || [];
-	}
-	else
-	{
-		this.stack = new Array();
-		this.listItems = [];
-	}
+	this.stack = new Array();
+	this.listItems = [];
 	this.size = 0;
 	this.inverse = false;
 	//this.allStacks = new Array();
@@ -76,6 +64,7 @@ FirstAssistant.prototype.setup = function() {
 		snapElements: this.tallSnapElements,
 		snapIndex: 0
 	}
+	this.snapIndex = 0;
 	this.controller.setupWidget("scrollerId", {
 			mode: 'horizontal-snap'
 		}, this.scrollerModel);
@@ -145,8 +134,6 @@ FirstAssistant.prototype.setup = function() {
 			
 		});
 		
-		
-	this.handleCookies();
 	/* add event handlers to listen to events from widgets */
 	Mojo.Event.listen(this.controller.get("PushButton"), Mojo.Event.tap, this.handlePush.bind(this));
 	Mojo.Event.listen(this.controller.get("PopButton"), Mojo.Event.tap, this.handlePop.bind(this));
@@ -196,6 +183,9 @@ FirstAssistant.prototype.setup = function() {
 	Mojo.Event.listen(this.controller.get("list"),Mojo.Event.listTap, this.handleListTap.bind(this));
 	Mojo.Event.listen(this.controller.get("list"),Mojo.Event.listDelete, this.handleListDelete.bind(this));
 	
+	//Listen for scroller change, to save for next run.
+	Mojo.Event.listen(this.controller.get("scrollerId"), Mojo.Event.propertyChange, this.setSnapIndex.bind(this));
+	
 	//Handle enlarging text when minimizing card
 	this.controller.listen(this.controller.stageController.document, Mojo.Event.stageDeactivate, this.zoomIn.bind(this));
 	this.controller.listen(this.controller.stageController.document, Mojo.Event.stageActivate, this.zoomOut.bind(this));
@@ -223,6 +213,27 @@ FirstAssistant.prototype.setup = function() {
 	this.zoom = false;
 	this.animationTime = 0.125;
 	
+	this.handleCookies();
+	
+	if(this.saveStack)
+	{
+		var oldStack = (new Mojo.Model.Cookie("oldStack")).get();
+		if(oldStack != undefined)
+			this.stack = oldStack;
+		var oldList = (new Mojo.Model.Cookie("oldList")).get();
+		if(oldList != undefined)
+			this.listItems = oldList;
+		var oldMacro = (new Mojo.Model.Cookie("oldMacro")).get();
+		if(oldMacro != undefined)
+		{
+			macro = oldMacro;
+		}
+		this.snapIndex = (new Mojo.Model.Cookie("snapIndex")).get();
+		if(this.snapIndex == undefined)
+			this.snapIndex = 0;
+		
+	}
+	
 	this.controller.get("recordingRow").hide();
 	this.controller.get("letterRow").hide();
 };
@@ -230,7 +241,8 @@ FirstAssistant.prototype.setup = function() {
 FirstAssistant.prototype.activate = function(event) {
 	/* put in event handlers here that should only be in effect when this scene is active. For
 	   example, key handlers that are observing the document */
-	//$$('body')[0].addClassName('palm-dark');
+	
+	this.controller.get("scrollerId").mojo.setSnapIndex(this.snapIndex);
 	this.keyListener = this.handleKeys.bind(this);
 	this.startListening();
 	this.handleCookies();
@@ -259,10 +271,12 @@ FirstAssistant.prototype.cleanup = function(event) {
 	   a result of being popped off the scene stack */
 	if(this.saveStack)
 	{
-		var oldStack = new Mojo.Model.Cookie("oldStack");
-		oldStack.put(this.stack);
-		var oldList = new Mojo.Model.Cookie("oldList");
-		oldList.put(this.listItems);
+		(new Mojo.Model.Cookie("oldStack")).put(this.stack);
+		(new Mojo.Model.Cookie("oldList")).put(this.listItems);
+		if(macro.length > 1)
+			(new Mojo.Model.Cookie("oldMacro")).put(macro);
+		(new Mojo.Model.Cookie("oldBase")).put(this.base);
+		(new Mojo.Model.Cookie("snapIndex")).put(this.snapIndex);
 	}
 };
 
@@ -301,19 +315,7 @@ FirstAssistant.prototype.handlePush = function(event)
 	}
 	else
 	{
-		if(this.base == 10)
-		{
-			this.stack.push(parseFloat(this.input));
-		}
-		else
-		{
-			if(this.recordingMacro)
-			{
-				macro.push({"func":"push","arg":parseInt(this.input,this.base)});
-				this.controller.get("instructionsCount").update(macro.length + " instructions");
-			}
-			this.stack.push(parseInt(this.input,this.base)); //no decimal values in non-base-10
-		}
+		this.stack.push(this.parse(this.input));
 		this.updateStack(event);
 		this.input = "";
 	}
@@ -679,14 +681,16 @@ FirstAssistant.prototype.toggleMacro = function()
 		this.controller.get("recordingRow").show();
 		while(macro.pop()){};
 		macro = new Array();
-		this.appMenuModel.items[3].items[1].label = "Stop recording";
+		this.appMenuModel.items[2].items[1].label = "Stop recording";
 		macro.push({"func":"setInverse", "arg":this.inverse});
 		this.updateMacroDiv();
 	}
 	else
 	{
 		this.controller.get("recordingRow").hide();
-		this.appMenuModel.items[3].items[1].label = "Record macro";
+		this.appMenuModel.items[2].items[1].label = "Record macro";
+		if(macro.length < 2) //Always at least one, which sets the inverse state.
+			macro = new Array();
 	}
 }
 
@@ -810,6 +814,9 @@ FirstAssistant.prototype.handleKeys = function(event)
 							switch(operation)
 							{
 							//Special cases
+							case "clear":
+								this.clearAll();
+								break;
 							case "macro":
 								this.runMacro();
 								break;
@@ -839,6 +846,12 @@ FirstAssistant.prototype.handleKeys = function(event)
 							case "subtract":
 							case "+":
 							case "-":
+							case "standard_deviation":
+							case "stddev":
+							case "std_dev":
+							case "standarddeviation":
+							case "standard deviation":
+							case "mean":
 								this.operateSingle(operation);
 								break;
 							default:
@@ -885,7 +898,7 @@ FirstAssistant.prototype.handleKeys = function(event)
 						temp = 9;
 						break;
 					case (190):
-						if(this.base == 10) temp = ".";
+						temp = ".";
 						break;
 					}
 				}
@@ -1093,96 +1106,6 @@ FirstAssistant.prototype.handleCommand = function (event)
 	}
 };
 
-/*
-FirstAssistant.prototype.handleCommand = function(event)
-{
-	if (event.type === Mojo.Event.command)
-	{
-		switch(event.command)
-		{
-			case "clearStack":
-				this.clearAll();
-				break;
-			case "runMacro":
-				this.runMacro();
-				break;
-			case "toggleMacro":
-				this.toggleMacro();
-				break;
-			case "saveStack":
-				if (this.stack.length > 0)
-				{
-					//var transition = this.controller.prepareTransition(Mojo.Transition.crossFade,false);
-					string = "";
-					for(var i = this.stack.length-1; i >= 0; i--)
-					{
-						if(isNaN(this.stack[i]))
-						{
-							string = string + 0 + ", ";
-						}
-						else
-						{
-							string = string +this.stack[i] + ", ";
-						}
-					}
-					this.listModel.items.unshift({data:string, stack:this.stack});
-					this.controller.modelChanged(this.listModel,this);
-					//this.allStacks.push(this.stack);
-					this.stack = new Array();
-					this.updateStack();
-					this.controller.get("list").style.display = "block";
-					//transition.run();
-					this.updateDiv();
-				}
-				else
-				{
-					Mojo.Controller.errorDialog("Can't save a stack with no items!");
-				}
-				break;
-			case "popStack":
-				delete this.stack;
-				this.stack = this.listItems[0].stack;
-				this.listItems.splice(0,1);
-				this.controller.modelChanged(this.listModel,this);
-				this.updateStack();
-				break;
-			case "showHelp":
-				Mojo.Controller.stageController.pushScene("help");
-				break;
-			case "showPreferences":
-				Mojo.Controller.stageController.pushScene("preferences");
-				break;
-			case "manageMacros":
-				Mojo.Controller.stageController.pushScene("macros");
-				break;
-			case "saveMacro":
-				Mojo.Event.stopListening( this.controller.document,"keydown", this.keyListener, true);
-				this.controller.showDialog({
-					template: 'dialogs/save-dialog',
-					assistant: new SaveNameAssistant(this),
-					preventCancel:false
-				});
-				break;
-			case "saveConstant":
-				Mojo.Event.stopListening( this.controller.document,"keydown", this.keyListener, true);
-				this.controller.showDialog({
-					template: 'dialogs/save-constant-dialog',
-					assistant: new SaveConstantAssistant(this),
-					preventCancel:false
-				});
-				break;
-			default:
-				Mojo.Log.error(event.command);
-				break;		
-		}
-	}
-	else
-	{
-		this.inputDiv.update(this.event.type);
-	}
-};
-*/
-
 FirstAssistant.prototype.clearAll = function(event)
 {
 	while(this.stack.length)
@@ -1312,9 +1235,9 @@ FirstAssistant.prototype.handleCookies = function()
 		this.controller.showAlertDialog({
 		            onChoose: function(value) {},
 		            title: "New with version "+version+":",
-		            message: "Improved handling of preferences (by a whole bunch). Style and appearance tweaks",
+		            message: "Decimals allowed in ANY RADIX! Improved handling of preferences (by a whole bunch). Fixed a few really weird, really obscure bugs.",
 		            choices:[
-		                {label:"Okay", value:"ok", type:"dismiss"}
+		                {label:"Well, it's about time!", value:"ok", type:"dismiss"}
 		            ]
 		        });
 		versionCookie.put(version);
@@ -1323,7 +1246,7 @@ FirstAssistant.prototype.handleCookies = function()
 	//Load everything from cookies
 	var precisionCookie = new Mojo.Model.Cookie("precision");
 	this.precision = precisionCookie.get();
-	if(this.precision == "undefined")
+	if(this.precision == undefined)
 		this.precision = 10;
 	this.reverseRoot = (new Mojo.Model.Cookie("reverseRoot").get());
 	this.verticalStack = (new Mojo.Model.Cookie("vertical").get());
@@ -1440,4 +1363,53 @@ FirstAssistant.prototype.doSaveConstant = function(constantSaveName)
 	this.stack.push(value);
 	savedConstants.push({"name":constantSaveName,"value":value});
 	(new Mojo.Model.Cookie("savedConstants")).put(savedConstants);
+}
+
+FirstAssistant.prototype.parse = function(string)
+{
+	var negative = (string[0] == '-');
+	var decimalPlace = string.indexOf(".");
+	if(decimalPlace < 0)
+		decimalPlace = string.length;
+	//Whole part
+	var integer = 0;
+	for(var c = (negative?1:0); c < decimalPlace; c++)
+	{
+		integer += this.charValue(string[c])*Math.pow(this.base,decimalPlace-(c+1));
+	}
+	//Fractional part
+	var fraction = 0;
+	for(var c = decimalPlace+1; c < string.length; c++)
+	{
+		fraction += this.charValue(string[c])*Math.pow(this.base,decimalPlace-c);
+	}
+	return integer + fraction;
+}
+
+FirstAssistant.prototype.charValue = function(character)
+{
+	character = character.toUpperCase();
+	if(character.charCodeAt(0) >= 48) //Zero.
+	{
+		if(character.charCodeAt(0) <= 57)
+		{
+			return character.charCodeAt(0)-48;
+		}
+		else
+		{
+			if(character.charCodeAt(0) >= 65) //A
+			{
+				if(character.charCodeAt(0) <= 90)
+				{
+					return character.charCodeAt(0)-55;
+				}
+			}
+		}
+	}
+	return 0;
+}
+
+FirstAssistant.prototype.setSnapIndex = function(event)
+{
+	this.snapIndex = event.value;
 }

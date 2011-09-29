@@ -102,27 +102,27 @@ PreferencesAssistant.prototype.setValue = function(event)
 	{
 	case "verticalToggle":
 		this.vertical = event.model.value;
+		(new Mojo.Model.Cookie("vertical")).put(this.vertical);
 		break;
 	case "inputStackToggle":
 		this.inputStack = event.model.value;
+		(new Mojo.Model.Cookie("inputStack")).put(this.inputStack);
 		break;
 	case "saveStackToggle":
 		this.saveStack = event.model.value;
+		(new Mojo.Model.Cookie("saveStack")).put(this.saveStack);
 		break;
 	case "compactToggle":
 		this.compact = event.model.value;
+		(new Mojo.Model.Cookie("compact")).put(this.compact);
 		break;
 	case "reverseRootToggle":
 		this.reverseRoot = event.model.value;
+		(new Mojo.Model.Cookie("reverseRoot")).put(this.reverseRoot);
 		break;
 	default:
 		Mojo.Log.error("Source element "+event.srcElement.id+" called setValue");
 	}
-	(new Mojo.Model.Cookie("vertical")).put(this.vertical);
-	(new Mojo.Model.Cookie("inputStack")).put(this.inputStack);
-	(new Mojo.Model.Cookie("saveStack")).put(this.saveStack);
-	(new Mojo.Model.Cookie("compact")).put(this.compact);
-	(new Mojo.Model.Cookie("reverseRoot")).put(this.reverseRoot);
 };
 
 PreferencesAssistant.prototype.setPrecision = function(event)

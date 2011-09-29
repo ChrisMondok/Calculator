@@ -16,17 +16,6 @@ KeysAssistant.prototype.setup = function() {
 	Mojo.Event.listen(this.controller.get("resetButton"),Mojo.Event.tap, this.resetAllKeys.bind(this));
 	
 	//step through all the rows, and set up action listeners for 'em.
-	
-	/*
-	var rows = this.controller.get("keyRows").childNodes;
-	for(var i = 0; i < rows.length; i++)
-	{
-		if(rows[i].id != undefined)
-		{
-			Mojo.Event.listen(rows[i],Mojo.Event.tap,this.setKey.bind(this));
-		}
-	}
-	*/
 	//Build list
 	
 	var keyRows = this.controller.get("functionKeyRows");
@@ -142,7 +131,7 @@ KeysAssistant.prototype.sanitize = function(keyCode)
 
 KeysAssistant.prototype.setKey = function(event)
 {
-	Mojo.View.clearTouchFeedback(this.controller.get("keyRows")); //Root? I'll use this, thanks.
+	//Mojo.View.clearTouchFeedback(this.controller.get("keyRows")); //Root? I'll use this, thanks.
 	this.keyFunction = event.currentTarget.whichFunction;	
 	if(this.keyFunction != undefined && this.keyFunction != null)
 	{
@@ -173,6 +162,7 @@ KeysAssistant.prototype.handleKeyPress = function(event)
 	case 16:	//Shift
 	case 17:	//Sym
 	case 129:	//Alt
+	case 0:
 		//Don't do anything.
 		return;
 		break; //Probably superfluous.
@@ -226,9 +216,8 @@ KeysAssistant.prototype.handleKeyPress = function(event)
 		this.displayKeys(false);
 		break;
 	}
-	Mojo.View.clearTouchFeedback(this.controller.get("keyRows")); //Root? I'll use this, thanks.
-	Mojo.Event.stopListening( this.controller.document,"keydown", this.keyListener, true);
-	this.keyFunction = undefined;
+	//Mojo.Event.stopListening( this.controller.document,"keydown", this.keyListener, true);
+	//this.keyFunction = undefined;
 }
 
 KeysAssistant.prototype.resetAllKeys = function(event)
