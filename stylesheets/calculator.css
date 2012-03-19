@@ -70,7 +70,7 @@ div.textFieldClass, #inputDiv
 
 .operatorButton
 {
-	min-width:22%;
+	min-width:71px;
 	display:inline-block;
 	margin:0px;
 	padding:0px;
@@ -115,7 +115,7 @@ div.textFieldClass, #inputDiv
 .scrollerItem
 {
 	float:left;
-	width:25%;
+	width:320px;
 }
 
 .italic
@@ -128,6 +128,7 @@ div.textFieldClass, #inputDiv
 	display:inline-block;
 	float:right;
 }
+/*
 .inputButtonGroup
 {
 	width:40%;
@@ -138,16 +139,14 @@ div.textFieldClass, #inputDiv
 	top:0px;
 	white-space:nowrap;
 }
-
+*/
 #inputRow
 {
 	position:relative;
 }
 .inputButton
 {
-	width:50%;
-	margin:-4px;
-	padding:0px;
+	min-width:71px;
 	display:inline-block;
 	text-align:justify;
 }
@@ -157,7 +156,7 @@ div.textFieldClass, #inputDiv
 }
 #inputScroller
 {
-	width:60%;
+	width:147px;
 	display:inline-block;
 }
 
